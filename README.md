@@ -20,8 +20,10 @@ dependencies:
   - python>=3.8
   - matplotlib
 Then create and activate the environment:
+```
 conda env create -f environment.yml
 conda activate ncrp
+```
 ### Input file
 NCRP expects two main inputs:
 
