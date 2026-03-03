@@ -40,7 +40,7 @@ ncrp/
 
 ```bash
 # 方式一：直接运行（在 ncrp/ 的上级目录执行）
-python -m ncrp.main --kraken reads.kraken2 --paf overlaps.paf --output final.tsv
+python -m main.py --kraken reads.kraken2 --paf overlaps.paf --output final.tsv
 
 # 方式二：安装后使用命令行
 pip install -e .
