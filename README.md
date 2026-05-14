@@ -36,6 +36,53 @@ ncrp/
 └── README.md
 ```
 
+## Input Formats
+
+### Kraken2 Classification File (`--kraken`)
+
+Standard Kraken2 output format, tab-separated. At minimum, the first three columns are used:
+
+| Column | Field | Description |
+|---|---|---|
+| 1 | Status | `C` = classified, `U` = unclassified |
+| 2 | Read ID | Unique read identifier (e.g. `S1R0`) |
+| 3 | Taxon ID | NCBI taxonomy ID (`0` for unclassified reads) |
+| 4+ | — | Ignored by NCRP |
+
+Example:
+```
+U	S1R0	0	2506	0:581 156889:5 0:1886
+C	S1R1	40269	2226	0:187 40269:5 0:1 40269:5 0:1472
+C	S1R2	1238	2683	0:985 1238:4 0:1326 1238:12 0:322
+```
+
+### PAF Overlap File (`--paf`)
+
+Standard [PAF (Pairwise mApping Format)](https://github.com/lh3/miniasm/blob/master/PAF.md), tab-separated with at least 10 columns. The overlap length is taken from column 10 (number of residue matches). Only records with overlap >= `--min-overlap` (default 130) are kept.
+
+| Column | Field | Used by NCRP |
+|---|---|---|
+| 1 | Query name | Read ID |
+| 6 | Target name | Read ID |
+| 10 | Residue matches | Overlap length |
+
+Example:
+```
+S1R0	2506	911	1791	+	S1R1416196	5135	821	1668	115	880	...
+S1R1	2226	902	2213	+	S1R1447390	2793	243	1567	149	1328	...
+```
+
+### Edges File (`--edges`)
+
+Simple 3-column space-separated file: `read1 read2 overlap`. Used as an alternative to PAF when you already have a precomputed overlap graph.
+
+Example:
+```
+S1R0 S1R1416196 880
+S1R1 S1R1447390 1328
+S1R1 S1R130557 1779
+```
+
 ## Usage
 
 ```bash
